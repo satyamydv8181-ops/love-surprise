@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff0f5">
+<title>For Bebo 💗</title>
+<style>
+  :root { --pink:#ff5c93; --deep:#e63878; --cream:#fff8fb; --ink:#57263b; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100svh; display: grid; place-items: center; overflow: hidden;
+    font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at 15% 15%, #ffe1ec 0, transparent 30%),
+                radial-gradient(circle at 85% 80%, #ffd2e2 0, transparent 32%),
+                linear-gradient(135deg, #fff8fb, #ffeaf2);
+  }
+  .hearts { position: fixed; inset: 0; pointer-events:none; overflow:hidden; }
+  .heart { position:absolute; bottom:-40px; opacity:.65; animation: floatUp linear infinite; }
+  @keyframes floatUp { to { transform: translateY(-115vh) rotate(25deg); opacity:0; } }
+  .card {
+    position: relative; z-index:1; width:min(92vw, 470px); padding: clamp(28px, 7vw, 42px) 24px;
+    text-align:center; border:1px solid #ffffffcc; border-radius:30px;
+    background: #ffffffb8; box-shadow: 0 22px 70px #d94d8120; backdrop-filter: blur(12px);
+  }
+  .top-heart { font-size: 48px; line-height:1; margin-bottom: 16px; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 50% { transform:scale(1.12); } }
+  h1 { margin:0; color:var(--deep); font-size:clamp(2rem, 8vw, 2.8rem); letter-spacing:-1.2px; }
+  .subtitle { margin: 13px 0 25px; font-size:1rem; color:#95516c; }
+  .question { font-size:1.45rem; font-weight:800; margin: 0 0 24px; }
+  .buttons { display:flex; justify-content:center; align-items:center; gap:14px; min-height:58px; position:relative; }
+  button { border:0; border-radius:999px; padding:14px 23px; font:700 1rem inherit; font-size:1rem; cursor:pointer; transition:transform .15s, box-shadow .15s; touch-action:manipulation; }
+  button:active { transform:scale(.96); }
+  #yes { color:white; background:linear-gradient(135deg, #ff77a5, #e63878); box-shadow:0 9px 22px #e6387838; }
+  #yes:hover { box-shadow:0 12px 26px #e6387855; transform:translateY(-2px); }
+  #no { color:#8a4a65; background:#ffe3ed; border:1px solid #ffc7da; }
+  .tiny { font-size:.8rem; margin-top:25px; color:#b06d88; }
+  .modal-backdrop { position:fixed; inset:0; display:none; place-items:center; padding:20px; background:#39132675; z-index:5; }
+  .modal-backdrop.show { display:grid; }
+  .modal { width:min(100%,400px); padding:32px 24px; text-align:center; border-radius:26px; background:#fff8fb; box-shadow:0 25px 90px #250b1b55; animation: pop .25s ease-out; }
+  @keyframes pop { from { transform:scale(.8); opacity:0; } to { transform:scale(1); opacity:1; } }
+  .modal .emoji { font-size:45px; }
+  .modal h2 { margin:14px 0 22px; font-size:1.55rem; color:var(--deep); line-height:1.35; }
+  #close { color:white; background:var(--deep); padding:12px 22px; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+<main class="card">
+  <div class="top-heart">💗</div>
+  <h1>I LOVE BEBO 😚🙈</h1>
+  <p class="subtitle">A tiny question for someone special…</p>
+  <p class="question">DI YOU 🤧?</p>
+  <div class="buttons" id="buttons">
+    <button id="yes" type="button">YES 😘</button>
+    <button id="no" type="button">NO 🙂‍↔️</button>
+  </div>
+  <p class="tiny">Made with lots of love 💌</p>
+</main>
+<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="message">
+  <div class="modal">
+    <div class="emoji">🥹💗✨</div>
+    <h2 id="message">I am very Lucky to have you in my life 🤗🤭</h2>
+    <button id="close" type="button">Awww 💖</button>
+  </div>
+</div>
+<script>
+  const no = document.getElementById('no');
+  const yes = document.getElementById('yes');
+  const buttons = document.getElementById('buttons');
+  const modal = document.getElementById('modal');
+  const hearts = document.getElementById('hearts');
+
+  function moveNo() {
+    const pad = 12;
+    const maxX = Math.max(pad, window.innerWidth - no.offsetWidth - pad);
+    const maxY = Math.max(pad, window.innerHeight - no.offsetHeight - pad);
+    no.style.position = 'fixed';
+    no.style.left = (pad + Math.random() * (maxX - pad)) + 'px';
+    no.style.top = (pad + Math.random() * (maxY - pad)) + 'px';
+    no.style.zIndex = '4';
+  }
+  no.addEventListener('pointerenter', moveNo);
+  no.addEventListener('pointerdown', (e) => { e.preventDefault(); moveNo(); });
+  no.addEventListener('click', (e) => { e.preventDefault(); moveNo(); });
+  yes.addEventListener('click', () => modal.classList.add('show'));
+  document.getElementById('close').addEventListener('click', () => modal.classList.remove('show'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('show'); });
+  window.addEventListener('resize', () => {
+    if (no.style.position === 'fixed') {
+      no.style.left = Math.min(parseFloat(no.style.left)||12, window.innerWidth-no.offsetWidth-12) + 'px';
+      no.style.top = Math.min(parseFloat(no.style.top)||12, window.innerHeight-no.offsetHeight-12) + 'px';
+    }
+  });
+  for (let i=0; i<18; i++) {
+    const el = document.createElement('span');
+    el.className = 'heart';
+    el.textContent = ['♡','♥','💗','💕'][i%4];
+    el.style.left = Math.random()*100 + '%';
+    el.style.fontSize = (14 + Math.random()*18) + 'px';
+    el.style.animationDuration = (8 + Math.random()*10) + 's';
+    el.style.animationDelay = (-Math.random()*15) + 's';
+    hearts.appendChild(el);
+  }
+</script>
+</body>
+</html>
